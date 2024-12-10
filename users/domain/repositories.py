@@ -11,3 +11,6 @@ class UserRepository(ABC):
     def user_exists_by_email(self, email: str) -> bool:
         pass
 
+    @abstractmethod
+    def authenticate_user(self, email: str, password: str):
+        pass

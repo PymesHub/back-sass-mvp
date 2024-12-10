@@ -1,4 +1,4 @@
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, authenticate
 from users.domain.repositories import UserRepository
 from users.domain.entities import UserEntity
 
@@ -31,3 +31,9 @@ class DjangoUserRepository(UserRepository):
             telephone=django_user.telephone,
             country=django_user.country
         )
+    
+    def authenticate_user(self, email: str, password: str):
+        user = authenticate(email=email, password=password)
+        if user is None: 
+            return None
+        return user
