@@ -7,6 +7,9 @@ User = get_user_model()
 
 class DjangoUserRepository(UserRepository):
     
+    def user_exists_by_email(self, email: str) -> bool:
+        return User.objects.filter(email=email).exists()
+
     def create_user(self, user: UserEntity) -> UserEntity:
         
         django_user = User.objects.create_user(

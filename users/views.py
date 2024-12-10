@@ -5,6 +5,7 @@ from users.application.serializer import UserRegistrationSerializer
 from users.use_cases.register_user import RegisterUserUseCase
 from users.application.repositories import DjangoUserRepository
 from drf_yasg.utils import swagger_auto_schema
+from users.application.exceptions import EmailAlreadyExistsException
 
 class UserView(APIView):
 
@@ -20,11 +21,15 @@ class UserView(APIView):
     def post(self, request, *args, **kwargs):
         serializer = UserRegistrationSerializer(data=request.data)
         if serializer.is_valid():
+
             user_repository = DjangoUserRepository()
             register_user_use_case = RegisterUserUseCase(user_repository)
-            user_entity = register_user_use_case.execute(serializer.validated_data)
-            return Response(
+            
+            try:
+                user_entity = register_user_use_case.execute(serializer.validated_data)
+                return Response(
                 { "message", f"Usuario {user_entity.username} registrado con éxito" },
-                status=status.HTTP_201_CREATED
-            )
+                status=status.HTTP_201_CREATED)
+            except EmailAlreadyExistsException as e:
+                return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

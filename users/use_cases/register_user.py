@@ -1,5 +1,6 @@
 from users.domain.entities import UserEntity
 from users.domain.repositories import UserRepository
+from users.application.exceptions import EmailAlreadyExistsException
 
 class RegisterUserUseCase:
 
@@ -7,6 +8,9 @@ class RegisterUserUseCase:
         self.user_repository = user_repository
 
     def execute(self, data: dict) -> UserEntity:
+
+        if self.user_repository.user_exists_by_email(email=data["email"]):
+            raise EmailAlreadyExistsException("Este correo electrónico ya está en uso")
 
         user_entity = UserEntity(
             username=data["email"],
