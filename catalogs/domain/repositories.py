@@ -10,3 +10,7 @@ class CatalogRepository(ABC):
     @abstractmethod
     def catalog_exists_by_name(self, name: str) -> bool:
         pass
+
+    @abstractmethod
+    def get_catalog_by_id(self, catalog_id: str) -> CatalogEntity:
+        pass

@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -51,6 +52,13 @@ REST_FRAMEWORK = {
     ),
 }
 
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=30),  # Establece la duración del access token a 30 días
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=60),  # La duración del refresh token puede ser mayor si lo deseas
+    'ROTATE_REFRESH_TOKENS': False,  # Si no deseas rotar los refresh tokens
+    'BLACKLIST_AFTER_ROTATION': False,  # Si no deseas que el refresh token sea marcado como bloqueado
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

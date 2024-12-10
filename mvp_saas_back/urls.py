@@ -22,5 +22,6 @@ urlpatterns = [
     path('api/swagger/', schema_view.with_ui('swagger', cache_timeout=0)),
     path('api/register/', UserView.as_view(), name='user-registration'),
     path('api/login/', LoginView.as_view(), name="user-login"),
-    path('api/create_catalog/', CatalogView.as_view(), name="catalog-create")
+    path('api/create_catalog/', CatalogView.as_view(), name="catalog-create"),
+    path('api/catalog/<str:catalog_id>', CatalogView.as_view())
 ]
