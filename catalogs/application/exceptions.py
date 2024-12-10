@@ -1,0 +1,2 @@
+class CatalogAlreadyExistsException(Exception):
+    pass

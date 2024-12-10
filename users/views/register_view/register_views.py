@@ -28,7 +28,7 @@ class UserView(APIView):
             try:
                 user_entity = register_user_use_case.execute(serializer.validated_data)
                 return Response(
-                { "message", f"Usuario {user_entity.username} registrado con éxito" },
+                { "message": f"Usuario {user_entity.username} registrado con éxito" },
                 status=status.HTTP_201_CREATED)
             except EmailAlreadyExistsException as e:
                 return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)

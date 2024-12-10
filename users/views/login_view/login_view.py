@@ -16,7 +16,6 @@ class LoginView(APIView):
     def post(self, request, *args, **kwargs):
 
         serializer = LoginSerializer(data=request.data)
-
         if serializer.is_valid():
 
             email = serializer.validated_data["email"]
@@ -26,7 +25,7 @@ class LoginView(APIView):
 
             try: 
                 result = login_user_use_case.execute(email=email, password=password)
-                return Response({ "message": "Inicio de sesión éxitoso", "token": result['token'], "user": result })
+                return Response({ "message": "Inicio de sesión éxitoso", "token": result['token'] })
         
             except ValueError as e:
                 return Response({ "error": str(e)}, status=status.HTTP_400_BAD_REQUEST )

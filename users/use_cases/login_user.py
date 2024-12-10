@@ -1,5 +1,6 @@
 from users.domain.repositories import UserRepository
-from django.contrib.auth.tokens import default_token_generator
+from utils.generatetoken import generate_token
+
 
 class LoginUserCase:
     def __init__(self, user_repository: UserRepository):
@@ -12,6 +13,6 @@ class LoginUserCase:
         if not user:
             raise ValueError("Correo electronico o contraseña incorrectos.")
         
-        token = default_token_generator(user)
+        token = generate_token(user)
 
         return { "user": user, "token": token }
